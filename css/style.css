@@ -1,0 +1,178 @@
+@charset "utf-8";
+/* CSS Document */
+
+#header {
+	height:150px;
+	width:760px;
+	margin-left:auto;
+	margin-right:auto;
+			}
+			
+#content_wrap{
+	height:800px;
+	width:760px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:10px;
+	margin-bottom:10px;
+	
+	}
+	
+#left_content{
+	height:700px;
+	width:220px;
+	float:left;
+	background:#336;
+	overflow:auto;
+	}
+#right_content{
+	height:800px;
+	width:530px;
+	margin-left:10px;
+	float:right;
+
+	}
+#submenu{
+	margin:0;
+	padding:0;
+	background:#336;
+	list-style-type:none;
+	width:220px;
+	height:400px;
+	text-align:left;
+
+}	
+#submenu a {
+		display:block;
+		color:#fff;
+		text-decoration:none;
+		padding:15px;
+		line-height:2.5em;
+		border-bottom:1px solid #fff;
+	}
+#submenu li{
+	margin:0;
+	padding:0;	
+	}
+
+#submenu a:hover {
+			background: #003;
+			
+			}
+	
+#menu{
+	margin:0;
+	padding:0;
+	background:#336;
+	list-style-type:none;
+	width:530px;
+	text-align:center;
+	
+}
+#menu li{
+	margin:0;
+	padding:0;	
+	}
+
+	
+	#menu a {
+		display:block;
+		color:#fff;
+		text-decoration:none;
+		padding:15px;
+		line-height:2.5em;
+		border-bottom:1px solid #fff;
+	}
+		
+		
+		#menu a:hover {
+			background: #003;
+			
+			}
+	#form_content{
+		margin-left:180px;
+		margin-right:180px;		
+
+		font-family:"Times New Roman", Times, serif;
+		font-size:18px;
+		font-weight:bold;
+		background:#336;
+		font-stretch:expanded;
+		
+		}
+		
+	
+		#comment {
+	height:150px;
+	margin-top:20px;
+	width:720px;
+	margin-left:auto;
+	margin-right:auto;
+			}
+	#scroller{
+	height:300px;
+	width:600px;
+	overflow:scroll;
+  
+	margin-left:auto;
+	margin-right:auto;
+	
+	}
+
+#navigation{
+list-style-type:none;
+background-color:#666699;
+height:20px;
+width:510px;
+margin-left:230px;
+//position:relative;
+
+}
+#navigation a{
+display:block;
+text-decoration:none;
+background-image:url(images/bubble.jpg);
+background-repeat:no-repeat;
+background-position:right;
+display:block;
+line-height:18px;
+text-align:justify;
+font-family: Georgia,"Times New Roman",Times,serif;
+font-size:18px;
+color:black;
+}
+#navigation li a:hover{
+			background: #CCF;
+			
+			}
+
+#navigation li {float:left;
+display:inline;padding-right:20px;}
+
+#footer{
+
+	
+	margin-top:80px;
+	float:bottom;
+font-family:Arial,Helvetica,sans-serif;
+font-size:10px;
+font-style:italic;
+color:#999;
+text-align:center;
+
+}
+.footer-text{
+
+font-family:Arial,Helvetica,sans-serif;
+font-size:10px;
+font-style:italic;
+color:#999;
+text-align:center;
+}
+
+
+}
+				
+
+			  
+	

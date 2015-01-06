@@ -1,0 +1,120 @@
+@charset "utf-8";
+/* CSS Document */
+
+#container{
+    height:800px;
+    width:760px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10px;
+    margin-bottom:10px;
+    }
+#name{
+    background:#666699;
+
+    height:40px;
+    width:220px;
+  //  margin-left:auto;
+  float:left;
+    }
+#friendname{
+    background:#333333;
+
+    height:40px;
+    width:490px;
+  //  margin-left:auto;
+  float:right;
+
+}
+   
+#text{
+   
+    background:#CCC;
+    height:650px;
+    width:720px;
+    //margin-left:20px;
+    //margin-right:20px;
+    float:center;
+    overflow:auto;
+    }
+#framecontent{
+    background-color:#CCC;
+    width:490px;
+    float:right;
+}
+
+#discussion{
+    background:#CCC;
+
+    height:520px;
+    width:720px;
+
+    overflow:auto;
+
+    }
+#friendpost{
+
+background:#666699;
+height:40px;
+width:680px;
+margin-left:40px;
+margin-right:40px;
+
+}
+#mypost{
+
+  background:#CCC;
+
+    height:800px;
+    width:300px;
+	margin-top:10px;
+    float:left;
+	overflow:auto;
+}
+
+
+.basictab{
+padding: 3px 0;
+margin-left: 0;
+font: bold 12px Verdana;
+//border-bottom: 1px solid gray;
+list-style-type: none;
+text-align: left; /*set to left, center, or right to align the menu as desired*/
+}
+
+.basictab li{
+display: inline;
+margin: 0;
+}
+
+.basictab li a{
+text-decoration: none;
+padding: 3px 7px;
+margin-right: 3px;
+border: 1px solid gray;
+border-bottom: none;
+background-color: #336;
+color: white;
+}
+
+.basictab li a:visited{
+color: white;
+}
+
+.basictab li a:hover{
+background-color: #003;
+color: white;
+}
+
+.basictab li a:active{
+color: black;
+}
+
+.basictab li.selected a{ /*selected tab effect*/
+position: relative;
+top: 1px;
+padding-top: 4px;
+background-color: #003;
+color:  #336;
+color: white;;
+}

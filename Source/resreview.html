@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Restaurant Review</title>
+	      <link href="css/style.css" rel="stylesheet" type="text/css" />
+		      <style type="text/css">
+            <!--
+            body {
+                background-image:url(images/background.jpg);
+            }
+       left_content{
+	   
+	 a{
+	 
+	 color:white;
+	 }
+	   }
+            -->
+        </style> 
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+ <script type="text/javascript">
+ var geocoder;
+  var map;
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(52.0190289,-0.7704274000000169);
+    var myOptions = {
+	  zoom: 5,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+  }
+
+  function codeAddress() {
+  var myOptions = {
+	  zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    var address = document.getElementById("addr").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+       if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+       
+		document.getElementById('lat').value= results[0].geometry.location.lat();
+		document.getElementById('lng').value= results[0].geometry.location.lng();
+	 // alert(results[0].geometry.location.lat()+" "+results[0].geometry.location.lng());
+	   var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      }else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+	
+	
+  }
+  
+  
+  		function validateForm()
+		{
+				
+		len = document.res.rating.length;
+		var chosen="";
+		for (i = 0; i <len; i++) {
+		
+		if (document.res.rating[i].checked) 
+				{
+					chosen = document.res.rating[i].value;
+				}	
+		}
+	
+		if (chosen == "") {
+			alert("No rating chosen!")
+			return false;
+			}
+		
+		var name=document.forms["res"]["name"].value;
+		var addr=document.forms["res"]["addr"].value;
+		//var url=document.forms["res"]["url"].value;
+		var review=document.forms["res"]["review"].value;
+		//replace all single quotes by special characters for entry into the database
+		
+		var numberOfElements = document.res.elements.length;
+		  for (x=0; x<numberOfElements; x++)  {
+
+			var curElement = window.document.res.elements[x];
+			curElement.value = curElement.value.replace(/\'/g, "&#39;");
+			curElement.value = curElement.value.replace(/\"/g, "&#34;");
+			      curElement.value = curElement.value.replace(/\#/g, "&#35;");
+    curElement.value = curElement.value.replace(/\$/g, "&#36;");
+    curElement.value = curElement.value.replace(/\&/g, "&#38;");
+    curElement.value = curElement.value.replace(/\(/g, "&#40;");
+    curElement.value = curElement.value.replace(/\)/g, "&#41;");
+    curElement.value = curElement.value.replace(/\*/g, "&#42;");
+    curElement.value = curElement.value.replace(/\+/g, "&#43;");
+    curElement.value = curElement.value.replace(/\-/g, "&#45;");
+    curElement.value = curElement.value.replace(/\./g, "&#46;");
+    curElement.value = curElement.value.replace(/\//g, "&#47;");
+
+		}
+		if (name==null || name==""||addr==""||addr==null||review==""||review==null)
+			{
+				alert("Please make sure you have filled all the fields!");
+				return false;
+			}
+	
+		if(name=="<script>"||addr=="<script>"||review=="<script>")
+		{
+		alert("Invalid characters");
+				return false;
+		}
+		
+		return true;
+		}
+		
+		
+
+   function limitText(limitField, limitCount, limitNum) {
+	if (limitField.value.length > limitNum) {
+		limitField.value = limitField.value.substring(0, limitNum);
+	} else {
+		limitCount.value = limitNum - limitField.value.length;
+	}
+
+}
+</script>
+</head>
+<body onload="initialize()" alink="blue" vlink="blue">
+     <a href="pickcategory.php"> << BACK </a>
+    <ul id="navigation">
+			<li><a href="index.php">Homepage</a></li>
+            <li><a href="my_posts.php">My Posts</a></li>
+            <li><a href="home.php">My Feed</a></li>
+            <li><a href="search.php">Search</a></li>
+          
+         
+        </ul>
+
+        <br/>
+
+<div id="content_wrap">
+ 
+ <div id="left_content">
+ 
+ <div id="map_canvas" style="width: 320px; height: 480px;"></div>
+ </div>
+<div id="right_content">
+
+	<form name="res" method="POST" action="newpost.php" onsubmit="return validateForm()">
+	<input type="hidden" name="type" value="res">
+	
+    <table width="530" height="347" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <th width="69" bgcolor="#666699" scope="row"><h5>Name :</h5></th>
+        <td colspan="2" bgcolor="#666699"><input id="name" name="name" type="text" width="500"/> </td>
+        <td width="63" bgcolor="#666699"><input type="button" value="LOCATE ON MAP" onclick="codeAddress()" /></td>
+        <td width="142" bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><h5>Address :</h5></th>
+        <td colspan="2" bgcolor="#666699">  <input type="text" id="addr" name="addr" width="250" /> <input type="hidden" id="lat" name="lat" value="0"><input type="hidden" id="lng" name="lng" value="0"> </td>
+        <td bgcolor="#666699"></td>
+        <td bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><h5>Review :</h5></th>
+        <td colspan="3" rowspan="3" bgcolor="#666699"><textarea name="review" cols="50" rows="5" onKeyDown="limitText(this.form.review,this.form.countdown,1000);" 
+onKeyUp="limitText(this.form.review,this.form.countdown,1000);"></textarea><br/>
+		<font size="1"><i>(Maximum characters: 1000)<br/>
+		You have <input readonly type="text" name="countdown" size="2" value="1000"> characters left.</i></font>
+		
+		</td>
+        <td bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"></th>
+        <td bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row">&nbsp;</th>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row">&nbsp;</th>
+        <td width="142" bgcolor="#666699">&nbsp;</td>
+        <td width="114" bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><h5>Rating :</h5></th>
+
+        <td colspan="3" bgcolor="#666699">
+
+        <input type="radio" name="rating" value="Awful" id="rating-1" /><label class="" for="rating-1">Awful</label> 
+		<input type="radio" name="rating" value="Poor" id="rating-2" /><label class="" for="rating-1">Poor</label> 
+		<input type="radio" name="rating" value="Average" id="rating-3" /><label class="" for="rating-1">Average</label> 
+		<input type="radio" name="rating" value="Good" id="rating-4" /><label class="" for="rating-1">Good</label> 
+		<input type="radio" name="rating" value="Excellent" id="rating-5" /><label class="" for="rating-1">Excellent</label> 
+ 
+        </td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><input type="checkbox" id="publish" name="publish" value="publish" checked="true" /></th>
+        <td bgcolor="#666699"><h5><strong>Publish to my wall?</strong></h5></td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row">&nbsp;</th>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699"><input type="submit" value="SUBMIT REVIEW" /></td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+    </table>
+</div>
+ </div>
+ 
+  <div>
+    <input id="address" type="textbox" value="Sydney, NSW">
+    <input type="button" value="Encode" onclick="codeAddress()">
+ 
+
+
+ </div>
+</body>
+
+

@@ -1,0 +1,85 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Search Form</title>
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+	 <style type="text/css">
+            <!--
+            body {
+                background-image:url(images/background.jpg);
+            }
+
+            -->
+        </style>
+		<script type="text/javascript">
+		function validateForm()
+		{
+			
+		len = document.search.typeofsearch.length;
+		var chosen="";
+		for (i = 0; i <len; i++) {
+
+		if (document.search.typeofsearch[i].checked) 
+				{
+					chosen = document.search.typeofsearch[i].value;
+				}	
+		}
+	
+		if (chosen == "") {
+			alert("Please choose a category!");
+			return false;
+			}
+		
+		var searchstr=document.forms["search"]["param"].value;
+		
+		if(searchstr==""||searchstr==null)
+		 {
+			alert("Please enter text to search");
+			return false;
+		 }
+		}
+		</script>
+    </head>
+    <body>
+	
+	 <div id="header"><img src="images/bubble.jpg" width="220" height="150" alt="Img unavailable" align="left"/><img src="images/header.jpg" alt="Img Unavailable" width="530" height="150" align="right"/></div>
+
+    <ul id="navigation">
+            <li><a href="index.php">Homepage</a></li>
+            <li><a href="pickcategory.php">PostReview</a></li>
+            <li><a href="my_posts.php">MyPosts</a></li>
+            <li><a href="home.php">MyFeed</a></li>
+        </ul>
+
+        <br/><br/>
+	
+
+	<div id="discussion" >			
+        
+	<form name="search" method="POST" action="search.php" onsubmit="return validateForm()">
+	
+	<table>
+	   <tr>
+		<td>
+		<font size="3"> <input type="radio" name="typeofsearch" value="book" id="1"/><label> Books</label>
+		 <input type="radio" name="typeofsearch" value="movie" id="2"/><label>Movies </label>
+		 <input type="radio" name="typeofsearch" value="tech" id="3"/><label>Tech</label>
+		 <input type="radio" name="typeofsearch" value="rest" id="4"/><label>Restaurants</label></font>
+	    </td>
+	   </tr>
+	<tr><td><br/><img src="images/search.png" height="25" width="25"/><input name="param" type="text" width="250"/><input type="submit" value="SEARCH"/>
+	</tr></td>
+	</table>
+	</form>
+		
+		
+	</div>
+		
+    </body>
+</html>

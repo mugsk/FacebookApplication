@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Tech Review</title>
+	 <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+<!--
+body {
+ background-image:url(images/background.jpg);
+}
+#left_content h1 strong {
+    font-family: Comic Sans MS, cursive;
+}
+
+a{
+
+color:white;
+
+}
+h2
+{
+ color:black;
+ font-family:times new roman;
+}
+-->
+</style>    
+	<script src="https://www.google.com/jsapi?key=ABQIAAAAmtf6Y-Mcxjq3zjqGNhtybxToewBUF4oN93oSw2u6KO66x8-veBRhTvXMT5dlhOqAR7MIJNcvwK5ICg"></script>
+    
+	<script type="text/javascript">
+		function validateForm()
+		{
+				
+		len = document.tech.rating.length;
+		var chosen="";
+		for (i = 0; i <len; i++) {
+		if (document.tech.rating[i].checked) 
+				{
+					chosen = document.tech.rating[i].value;
+				}	
+		}
+	
+		if (chosen == "") {
+			alert("No rating chosen!")
+			return false;
+			}
+		
+		var model=document.forms["tech"]["model"].value;
+		var brand=document.forms["tech"]["brand"].value;
+		//var url=document.forms["tech"]["url"].value;
+		var review=document.forms["tech"]["review"].value;
+		
+		
+		if (model==null || model==""||brand==""||brand==null||review==""||review==null)
+			{
+				alert("Please make sure you have filled all the fields!");
+				return false;
+			}
+
+	 if(model=="<script>"||brand=="<script>"||review=="<script>")
+		{
+		alert("Invalid characters");
+				return false;
+		}
+
+		//replace all single quotes by special characters for entry into the database
+		
+			
+				  var numberOfElements = document.tech.elements.length;
+		  for (x=0; x<numberOfElements; x++)  {
+
+			var curElement = document.forms["tech"]["review"].value;
+			curElement.value = curElement.value.replace(/\'/g, "&#39;");
+			curElement.value = curElement.value.replace(/\"/g, "&#34;");
+			 var curElement = document.forms["tech"]["model"].value;
+			curElement.value = curElement.value.replace(/\'/g, "&#39;");
+			curElement.value = curElement.value.replace(/\"/g, "&#34;");
+			var curElement = document.forms["tech"]["brand"].value;
+			curElement.value = curElement.value.replace(/\'/g, "&#39;");
+			curElement.value = curElement.value.replace(/\"/g, "&#34;");
+
+		}
+		return true;
+}
+				  
+   function limitText(limitField, limitCount, limitNum) {
+	if (limitField.value.length > limitNum) {
+		limitField.value = limitField.value.substring(0, limitNum);
+	} else {
+		limitCount.value = limitNum - limitField.value.length;
+	}
+}
+
+
+/*
+*  Searching for images using Google Image Search.
+*  code Reference : http://code.google.com/apis/ajax/playground/?exp=image#size_restriction		
+*  This uses a Raw Searcher, aka a searcher that is
+*  not attached to a SearchControl. The search results are manually handled
+*/
+
+google.load('search', '1');
+
+function searchComplete(searcher) {
+  // Check that we got results
+  if (searcher.results && searcher.results.length > 0) {
+    var contentDiv = document.getElementById('left_content');
+    contentDiv.innerHTML = '';
+    var results = searcher.results;
+	document.getElementById("left_content").innerHTML += "<font size='2'>Choose 'SELECT' to add a movie poster to your review.<hr/><br/></font> <form name='sgoogle'>";	 
+   for (var i = 0; i < results.length; i++) 
+   {
+      var result = results[i];
+      var imgContainer = document.createElement('div');
+      var title = document.createElement('h6');
+      // Use titleNoFormatting so that no HTML tags are left in the title
+      title.innerHTML = result.titleNoFormatting;
+      var newImg = document.createElement('img');
+      newImg.src = result.tbUrl;
+      imgContainer.appendChild(title);
+      imgContainer.appendChild(newImg);
+	  document.getElementById('left_content').innerHTML += "<img src='" + result.tbUrl + "' id='img"+ i +"' />";
+	  document.getElementById('left_content').innerHTML +=  "<input type='hidden' id='url"+ i +"' value='"+ result.tbUrl +"'/>";
+	  document.getElementById('left_content').innerHTML += "<br/> <button type=button value='"+i+"' onclick='populateform(this.value)'> SELECT </button><hr/>";
+	
+    }
+  }
+}
+
+function OnLoad() 
+{
+  var imageSearch = new google.search.ImageSearch();
+   /* Set a callback so that anytime a search is executed, it will call
+  * the searchComplete function and pass it ImageSearch searcher.
+  * When a search completes, the ImageSearch object is automatically
+  * populated with the results.
+  */
+  imageSearch.setSearchCompleteCallback(this, searchComplete, [imageSearch]);
+ var criteria = document.getElementById('brand').value+" "+ document.getElementById('model').value;
+ imageSearch.execute(criteria);
+}
+
+function populateform(val)
+        {
+	document.getElementById('imgurltopass').value= document.getElementById('url'+val).value;
+    document.getElementById('urlimg').innerHTML = "<img src='" + document.getElementById('url'+val).value + "' width='150' height='150' />";
+	}	
+</script>
+
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+   <ul id="navigation">
+			<li><a href="index.php">Homepage</a></li>
+            <li><a href="my_posts.php">My Posts</a></li>
+            <li><a href="home.php">My Feed</a></li>
+            <li><a href="search.php">Search</a></li>       
+   </ul><br/>
+    <a href="pickcategory.php"> << BACK </a>
+	 <div id="content_wrap">
+	 <div id="left_content" style="overflow:auto; color:white "> <font size="2">Enter the model and brand and click on SEARCH to get a thumbnail image to add to your review.</font></div>
+	
+   
+<div id="content" style="height:700px;width:530px;margin-left:10px;float:right;">
+
+	<form name="tech" method="POST" action="newpost.php" onsubmit="return validateForm()">
+
+	<input type="hidden" name="type" value="tech">
+    <table width="530" height="347" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <th width="69" bgcolor="#666699" scope="row"><h5>Model :</h5></th>
+        <td colspan="2" bgcolor="#666699"><input type="text" name="model" id="model" width="500"/> </td>
+        <td width="63" bgcolor="#666699"><input type="button" value="SEARCH" onclick="OnLoad()"/></td>
+        <td width="142" bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><h5>Brand :</h5></th>
+        <td colspan="2" bgcolor="#666699">  <input type="text" name="brand" id="brand" width="250" /> </td>
+        <td bgcolor="#666699"></td>
+        <td bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><h5>Image:</h5></th>
+        <td colspan="2" bgcolor="#666699"> <div id='urlimg'> </div><input type="hidden" value="NOT AVAILABLE" id="imgurltopass" name="imgurltopass"></td>
+        <td bgcolor="#666699"></td>
+        <td bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><h5>Review :</h5></th>
+        <td colspan="3" rowspan="3" bgcolor="#666699"><textarea name="review" cols="50" rows="5" onKeyDown="limitText(this.form.review,this.form.countdown,1000);" 
+onKeyUp="limitText(this.form.review,this.form.countdown,1000);" ></textarea><br/>
+<font size="1"><i>(Maximum characters: 1000)<br/>
+		You have <input readonly type="text" name="countdown" size="2" value="1000"> characters left.</i></font>
+
+</td>
+        <td bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"></th>
+        <td bgcolor="#666699"></td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row">&nbsp;</th>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row">&nbsp;</th>
+        <td width="142" bgcolor="#666699">&nbsp;</td>
+        <td width="114" bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><h5>Rating :</h5></th>
+
+        <td colspan="3" bgcolor="#666699">
+
+
+        <input type="radio" name="rating" value="Awful" id="rating-1" /><label class="" for="rating-1">Awful</label> 
+		<input type="radio" name="rating" value="Poor" id="rating-2" /><label class="" for="rating-1">Poor</label> 
+		<input type="radio" name="rating" value="Average" id="rating-3" /><label class="" for="rating-1">Average</label> 
+		<input type="radio" name="rating" value="Good" id="rating-4" /><label class="" for="rating-1">Good</label> 
+		<input type="radio" name="rating" value="Excellent" id="rating-5" /><label class="" for="rating-1">Excellent</label> 
+ 
+       
+        </td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row"><input type="checkbox" id="publish" name="publish" value="publish" checked="true" /></th>
+        <td bgcolor="#666699"><h5><strong>Publish to my wall?</strong></h5></td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+      <tr>
+        <th bgcolor="#666699" scope="row">&nbsp;</th>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699"><input type="submit" value="SUBMIT REVIEW" /></td>
+        <td bgcolor="#666699">&nbsp;</td>
+        <td bgcolor="#666699">&nbsp;</td>
+      </tr>
+    </table>
+	</div>
+	</form>
+	 <div id="branding"  style="float: left;"></div><br />
+    <div id="content">Loading...</div>
+	</div>
+	
+	
+  </body>
+</html>
